@@ -19,7 +19,8 @@ const Login = ({ setIsAuthenticated }) => {
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
+    const data = response ;
+    console.log(data) ;
     if (response.ok) {
       localStorage.setItem('token', data.token);
       setIsAuthenticated(true);

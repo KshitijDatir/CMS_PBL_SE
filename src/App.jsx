@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <Router>
-      {isAuthenticated && <Header />} {/* Ensures Header is always shown after login */}
+      {isAuthenticated && <Header />} 
       <Routes>
         <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />

@@ -1,28 +1,190 @@
+/* Overall page container */
+.home-container {
+  font-family: Arial, sans-serif;
+  /* padding: 20px; */
+  position: relative;
+}
+
+/* Header styling with raised z-index */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1100;
+}
+
+/* Cart toggle button style */
+.cart-toggle-button {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-toggle-button:hover {
+  background-color: #ff4500;
+}
+
+/* Menu container as a responsive flex grid */
 .menu-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .menu-item {
-    width: 250px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s;
-  }
-  
-  .menu-item:hover {
-    transform: scale(1.05);
-  }
-  
-  .menu-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Menu item card styling */
+.menu-item {
+  position: relative;
+  width: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Container for the image and overlay */
+.menu-image-container {
+  position: relative;
+}
+
+/* Menu image style */
+.menu-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Description overlay hidden by default */
+.item-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Display overlay on hover */
+.menu-item:hover .item-overlay {
+  opacity: 1;
+}
+
+/* Menu item textual information */
+.menu-item-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.menu-item-info h3 {
+  margin: 10px 0;
+}
+
+.price {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Add to Cart button styling */
+.add-to-cart-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-to-cart-button:hover {
+  background-color: #218838;
+}
+
+/* Cart panel styling adjusted so it doesn't cover the header */
+.cart-panel {
+  position: fixed;
+  top: 70px; /* Adjusted top offset to appear below the header */
+  right: -350px;
+  width: 300px;
+  height: calc(100% - 70px); /* Adjust height to account for header space */
+  background-color: #f9f9f9;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  overflow-y: auto;
+  transition: right 0.3s ease;
+  z-index: 1000;
+}
+
+.cart-panel.open {
+  right: 0;
+}
+
+.cart-panel h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Cart item styling */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.cart-item:hover {
+  transform: translateX(5px);
+}
+
+/* Remove button styling in the cart */
+.remove-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.remove-button:hover {
+  background-color: #c82333;
+}
+
+/* Place Order button styling */
+.place-order-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.place-order-button:hover {
+  background-color: #0069d9;
+}
