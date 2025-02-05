@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';  // Import Link for navigation
 import './Home.css';
 
 const Home = () => {
   const [menuItems, setMenuItems] = useState([]);
-  const [cart, setCart] = useState([]); // Stores selected menu items
-  const [showCart, setShowCart] = useState(false); // Toggle for cart sidebar
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch menu items on component load
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -23,17 +22,36 @@ const Home = () => {
       .catch(() => alert('Error fetching menu'));
   }, [navigate]);
 
-  // Function to add item to cart
   const addToCart = (item) => {
-    setCart(prevCart => [...prevCart, item]);
+    setCart(prevCart => {
+      const isItemInCart = prevCart.some(cartItem => cartItem.id === item.id);
+      if (isItemInCart) {
+        return prevCart.filter(cartItem => cartItem.id !== item.id); // Remove item if already in cart
+      }
+      return [...prevCart, item]; // Add item to cart
+    });
   };
-
-  // Function to remove item from cart
-  const removeFromCart = (index) => {
-    setCart(prevCart => prevCart.filter((_, i) => i !== index));
+  
+  const handleAddMore = (item) => {
+    setCart(prevCart => {
+      const isItemInCart = prevCart.some(cartItem => cartItem.id === item.id);
+      if (isItemInCart) {
+        // Increase quantity of existing item in cart
+        return prevCart.map(cartItem => 
+          cartItem.id === item.id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      }
+      return [...prevCart, { ...item, quantity: 1 }];
+    });
   };
+  
+  const handleRemoveFromCart = (item) => {
+    setCart(prevCart => prevCart.filter(cartItem => cartItem.id !== item.id));
+  };
+  
 
-  // Function to place order
   const placeOrder = () => {
     const token = localStorage.getItem('token');
     if (cart.length === 0) {
@@ -48,68 +66,95 @@ const Home = () => {
       .then(res => res.json())
       .then((data) => {
         alert(`Order placed successfully! Your Order ID is: ${data.orderId}`);
-        setCart([]); // Clear cart after order placement
+        setCart([]);
         navigate(`/order-confirmation/${data.orderId}`);
       })
       .catch(() => alert('Error placing order'));
   };
 
   return (
-    <div className="home-container">
-      <header className="header">
-        <h1>Menu</h1>
-        <button className="cart-toggle-button" onClick={() => setShowCart(!showCart)}>
-          Cart ({cart.length})
-        </button>
-      </header>
+    <div className="app-container">
+      
+      <header>
+        
+      <button className="cart-button" onClick={() => setShowCart(!showCart)}>
+                Cart ({cart.length})
+      </button>
+      </header>  
+      
+     
 
       <div className="menu-container">
-        {menuItems.length === 0 ? (
-          <p>No menu items available.</p>
-        ) : (
-          menuItems.map((item) => (
-            <div key={item.id} className="menu-item">
-              <div className="menu-image-container">
-                <img src={item.image} alt={item.name} className="menu-image" />
-                <div className="item-overlay">
-                  <p>{item.description}</p>
-                </div>
-              </div>
-              <div className="menu-item-info">
-                <h3>{item.name}</h3>
-                <p className="price">${item.price}</p>
-                <button onClick={() => addToCart(item)} className="add-to-cart-button">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+      {menuItems.map((item) => (
+    <div key={item.id} className="menu-item">
+    <img src={item.image} alt={item.name} />
+    <div className="menu-item-content">
+      <h3>{item.name}</h3>
+      <p>{item.description}</p>
+      <div className="price">${item.price.toFixed(2)}</div>
 
-      {/* Cart Panel that now appears below the header */}
-      <div className={`cart-panel ${showCart ? 'open' : ''}`}>
-        <h2>Your Cart</h2>
-        {cart.length === 0 ? (
-          <p>Your cart is empty.</p>
+      <div className={`add-to-cart-container ${cart.some(cartItem => cartItem.id === item.id) ? 'added' : ''}`}>
+        {cart.some(cartItem => cartItem.id === item.id) ? (
+          <div className="split-button">
+            <button
+              onClick={() => handleRemoveFromCart(item)} // Handle Remove Item
+              className="remove-from-cart"
+            >
+              Remove
+            </button>
+            <button
+              onClick={() => handleAddMore(item)} // Handle Add More Items
+              className="add-more"
+            >
+              Add More
+            </button>
+          </div>
         ) : (
-          cart.map((item, index) => (
-            <div key={index} className="cart-item">
-              <div>
-                <span>{item.name}</span> - <span>${item.price.toFixed(2)}</span>
-              </div>
-              <button onClick={() => removeFromCart(index)} className="remove-button">
-                Remove
-              </button>
-            </div>
-          ))
-        )}
-        {cart.length > 0 && (
-          <button onClick={placeOrder} className="place-order-button">
-            Place Order
+          <button
+            onClick={() => addToCart(item)} // Handle Add to Cart
+            className="add-to-cart"
+          >
+            Add to Cart
           </button>
         )}
       </div>
+    </div>
+  </div>
+))}
+
+      </div>
+
+      {showCart && (
+        <div className={`cart-panel ${showCart ? 'open' : ''}`}>
+          <h2>Your Cart</h2>
+          {cart.length === 0 ? (
+            <p style={{ textAlign: 'center', color: '#888' }}>Your cart is empty</p>
+          ) : (
+            <>
+              {cart.map((item, index) => (
+                <div key={index} className="cart-item">
+                  <div className="cart-item-details">
+                    <div className="cart-item-name">{item.name}</div>
+                    <div className="cart-item-price">${item.price.toFixed(2)}</div>
+                  </div>
+                  <button
+                    onClick={() => handleRemoveFromCart(index)}
+                    className="remove-button"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={placeOrder}
+                className="place-order-button"
+              >
+                Place Order
+              </button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

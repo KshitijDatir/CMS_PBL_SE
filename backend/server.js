@@ -14,8 +14,7 @@ const menuItems = [
   { id: 1, name: 'Burger', description: 'Delicious Chicken burger', price: 5.99, image: '/assets/burger.jpg' },
   { id: 2, name: 'Pizza', description: 'Cheesy pizza', price: 8.99, image: '/assets/pizza.jpg' },
   { id: 3, name: 'Pasta', description: 'Creamy pasta', price: 7.99, image: '/assets/pasta.jpg' },
-  
-];
+]
 
 let orders = [];
 

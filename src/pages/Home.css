@@ -1,190 +1,198 @@
-/* Overall page container */
-.home-container {
-  font-family: Arial, sans-serif;
-  /* padding: 20px; */
-  position: relative;
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Header styling with raised z-index */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Header Styles */
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f3e36d;
+  color: white;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  z-index: 1100;
+  z-index: 1000;
+  height: 80px;
 }
 
-/* Cart toggle button style */
-.cart-toggle-button {
-  background-color: #ff6347;
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
   color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #29aadd;
+}
+
+.cart-button {
+  display: flex;
+  align-items: center;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 10px 20px;
   border: none;
-  padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
-.cart-toggle-button:hover {
-  background-color: #ff4500;
+.cart-button:hover {
+  background-color: #ff5252;
 }
 
-/* Menu container as a responsive flex grid */
+.cart-button .cart-count {
+  margin-left: 5px;
+  background-color: white;
+  color: #ff6b6b;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Menu Styles */
 .menu-container {
-  display: flex;
-  flex-wrap: wrap;
+  margin-top: 100px; /* Offset from header */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  justify-content: center;
-  margin-top: 20px;
+  padding: 20px;
 }
 
-/* Menu item card styling */
 .menu-item {
-  position: relative;
-  width: 250px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .menu-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-10px);
 }
 
-/* Container for the image and overlay */
-.menu-image-container {
-  position: relative;
-}
-
-/* Menu image style */
-.menu-image {
+.menu-item img {
   width: 100%;
-  height: 150px;
+  height: 200px;
   object-fit: cover;
+  border-bottom: 2px solid #f3e36d;
 }
 
-/* Description overlay hidden by default */
-.item-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-/* Display overlay on hover */
-.menu-item:hover .item-overlay {
-  opacity: 1;
-}
-
-/* Menu item textual information */
-.menu-item-info {
+.menu-item-content {
   padding: 15px;
-  text-align: center;
 }
 
-.menu-item-info h3 {
-  margin: 10px 0;
+.menu-item-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.menu-item-content p {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  color: #666;
 }
 
 .price {
   font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
 }
 
-/* Add to Cart button styling */
-.add-to-cart-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.add-to-cart-button:hover {
-  background-color: #218838;
-}
-
-/* Cart panel styling adjusted so it doesn't cover the header */
-.cart-panel {
-  position: fixed;
-  top: 70px; /* Adjusted top offset to appear below the header */
-  right: -350px;
-  width: 300px;
-  height: calc(100% - 70px); /* Adjust height to account for header space */
-  background-color: #f9f9f9;
-  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  overflow-y: auto;
-  transition: right 0.3s ease;
-  z-index: 1000;
-}
-
-.cart-panel.open {
-  right: 0;
-}
-
-.cart-panel h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Cart item styling */
-.cart-item {
+.add-to-cart-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
 }
 
-.cart-item:hover {
-  transform: translateX(5px);
-}
-
-/* Remove button styling in the cart */
-.remove-button {
-  background-color: #dc3545;
+.add-to-cart {
+  background-color: #4CAF50;
   color: white;
+  padding: 12px 25px;
   border: none;
-  padding: 5px 8px;
-  border-radius: 3px;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.remove-button:hover {
-  background-color: #c82333;
+.add-to-cart:hover {
+  background-color: #45a049;
 }
 
-/* Place Order button styling */
+.split-button {
+  display: flex;
+  gap: 10px;
+}
+
+.remove-from-cart,
+.add-more {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.remove-from-cart:hover,
+.add-more:hover {
+  background-color: #ff5252;
+}
+
+.add-more {
+  background-color: #ff6b6b;
+  width: 60%; /* Adds more emphasis to Add More button */
+}
+
+.remove-from-cart {
+  width: 30%; /* Slightly smaller for Remove button */
+}
+
+.add-to-cart-container.added {
+  color: #4CAF50; /* Green when item is added */
+}
+
 .place-order-button {
-  background-color: #007bff;
+  background-color: #29aadd;
   color: white;
+  padding: 12px 20px;
   border: none;
-  padding: 10px;
-  width: 100%;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 20px;
+  font-size: 1.1rem;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .place-order-button:hover {
-  background-color: #0069d9;
+  background-color: #1e80b6;
 }
