@@ -16,7 +16,7 @@ const Header = () => {
     <div className="header-wrapper">
       <header className="header">
         <div className="logo-container">
-          <img src="/api/placeholder/40/40" alt="PICT Canteen Logo" className="logo" />
+          <img src="assets\logo.png" alt="PICT Canteen Logo" className="logo" />
           <h1 className="header-title">PICT CANTEEN</h1>
         </div>
         <nav className="nav-links">
