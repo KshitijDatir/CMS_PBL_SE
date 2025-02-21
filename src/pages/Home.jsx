@@ -87,7 +87,7 @@ const Home = () => {
             <div className="menu-item-content">
               <h3>{item.name}</h3>
               <p>{item.description}</p>
-              <div className="price">${item.price.toFixed(2)}</div>
+              <div className="price">Rs.{item.price.toFixed(2)}</div>
 
               <div className={`add-to-cart-container ${cart.some(cartItem => cartItem.id === item.id) ? 'added' : ''}`}>
                 {cart.some(cartItem => cartItem.id === item.id) ? (
@@ -122,7 +122,7 @@ const Home = () => {
                 <div key={index} className="cart-item">
                   <div className="cart-item-details">
                     <div className="cart-item-name">{item.name}</div>
-                    <div className="cart-item-price">${(item.price * item.quantity).toFixed(2)}</div>
+                    <div className="cart-item-price">Rs.{(item.price * item.quantity).toFixed(2)}</div>
                     <div className="cart-item-quantity">Qty: {item.quantity}</div>
                   </div>
                   <button onClick={() => handleRemoveFromCart(item)} className="remove-button">
